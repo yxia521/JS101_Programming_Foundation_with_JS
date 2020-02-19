@@ -64,8 +64,48 @@ function findGreatest(numbers) {
 Remember, pseudocode is a guess at the solution; there's no verification that the logic is correct. You can't do that until you translate it to program code.
 
 ```javascript
-take the first number
-take the second number
+initialize an empty array
 
+iterate thru the array
+- start pushing the first element to the empty array, then 3rd..until nth where n
+is the last or the last 2nd element
+
+returns the new array with new elements
 ```
 
+- ESLint
+
+  - ESLint also provides what developers call a **linter**. Linters inspect your code for potential errors and "code smells," and for adherence to the best practice determined by developers over the years. 
+
+  - ##### Installation and Usage
+
+    ESLint is a Node package, so you install it like any other Node package. If you have the necessary permissions, you should install it as a global package:
+
+    ```javascript
+    $ npm install eslint eslint-cli babel-eslint --save-dev
+    $ npm uninstall -g eslint             // Omit -g if local install
+    $ npm install -g eslint@5.12.1 
+    $ ./node_modules/.bin/eslint -v       // check version
+    $ ./node_modules/.bin/eslint test.js
+    ```
+
+- Calculator.js
+
+  We can now complete the `invalidNumber` function:
+
+  ```js
+  function invalidNumber(number) {
+    return Number.isNaN(Number(number));
+  }
+  ```
+
+  The `Number.isNaN()` function takes any JavaScript value and returns the boolean `true` if the value is `NaN`, `false` if it is not. **We check whether `Number(number)` is `NaN` since calling `Number()` on a non-numeric string evaluates to `NaN`**. Thus, `number` is invalid if the conversion results in `NaN`. Note that `Number()` ignores leading whitespace in the `number` string, so `Number(' 34')` returns `34`.
+
+  :speaker: The `readline.question` function returns an empty string when the user doesn't provide any input, and `Number` returns `0` when given an empty string or a string that contains nothing but whitespace. 
+
+  ```javascript
+  Number('');    // returns 0
+  Number('   '); // returns 0
+  ```
+
+  
