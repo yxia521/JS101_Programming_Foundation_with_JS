@@ -47,11 +47,9 @@ function isInvalidInput(number) { // here number is string
   return Number(number) <= 0 || number.includes(',') || Number.isNaN(Number(number)) || number.trimStart() === '';
 }
 
-let answer;
-
 prompt(MESSAGE.welcome);
 prompt(MESSAGE.line);
-do {
+while (true) {
   let loanAmount = getLoan();
   while (isInvalidInput(loanAmount)) {
     prompt(MESSAGE.invalidInput);
@@ -70,5 +68,6 @@ do {
     monthlyInterestRate, durationInMonths);
   prompt(`Your monthly payment is $${(monthlyPayment).toFixed(2)}.`);
   prompt(MESSAGE.playAgain);
-  answer = readline.question();
-} while (['Y', 'y'].includes(answer));
+  let answer = readline.question();
+  if (answer.toLowerCase() === 'n') break;
+}
