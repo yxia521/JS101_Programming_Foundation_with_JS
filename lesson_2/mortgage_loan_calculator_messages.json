@@ -1,0 +1,9 @@
+{
+  "welcome": "Welcome to mortgage loan calculator!",
+  "line": "------------------------------------",
+  "getLoan": "What's your loan amount in USD?",
+  "getApr": "What's your Annual Percentage Rate (in %)?",
+  "getDuration": "How long (in months) do you expect to loan? (At least 1 month)",
+  "playAgain": "Would you like to perform another calculation? (y/n)",
+  "invalidInput": "Invalid input. Please enter a number greater than 0, without comma:"
+}

@@ -5,59 +5,68 @@
 // ask the user for 1st number and get this number
 // ask the user for 2nd number and get this number
 // ask the user what operation to perform and get this info
-// if this info is equal to one of the switch cases,
-// perform correspondingly.
+// if this info is equal to one of the switch cases, perform correspondingly.
 // print the result
 
 const readline = require('readline-sync');
+let answer;
+const MSG = require('./calculator_messages.json');
 
 function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function invalidNumber(number) {
+function isinvalidNumber(number) {
   return Number.isNaN(Number(number)) || number.trimStart() === '';
 }
 
-prompt('Welcome to Calculator!');
-prompt("What's the first number?");
-let number1 = readline.question();
+prompt(MSG.welcome);
 
-while (invalidNumber(number1)) {
-  prompt("Hmm... that doesn't look like a valid number. Try again: ");
-  number1 =  readline.question();
-}
+do {
+  prompt(MSG.firstNumber);
+  let number1 = readline.question();
 
-prompt("What's the second number?");
-let number2 = readline.question();
+  while (isinvalidNumber(number1)) {
+    prompt(MSG.isinvalidNumber);
+    number1 =  readline.question();
+  }
 
-while (invalidNumber(number1)) {
-  prompt("Hmm... that doesn't look like a valid number. Try again: ");
-  number1 =  readline.question();
-}
+  prompt(MSG.secondNumber);
+  let number2 = readline.question();
 
-prompt('What operation would you like to perform?\n1) Add 2) subtract 3) Multiply 4) Divide');
-let operation = readline.question();
+  while (isinvalidNumber(number1)) {
+    prompt(MSG.invalidNumber);
+    number1 =  readline.question();
+  }
 
-while (!['1', '2', '3', '4'].includes(operation)) {
-  prompt("Must choose 1, 2, 3 or 4. Try again:");
-  operation = readline.question();
-}
+  prompt(MSG.enterOperation);
+  let operation = readline.question();
 
-let output;
-switch (operation) {
-  case '1':
-    output = Number(number1) + Number(number2);
-    break;
-  case '2':
-    output = Number(number1) - Number(number2);
-    break;
-  case '3':
-    output = Number(number1) * Number(number2);
-    break;
-  case '4':
-    output = Number(number1) / Number(number2);
-    break;
-}
+  while (!['1', '2', '3', '4'].includes(operation)) {
+    prompt(MSG.invalidChoose);
+    operation = readline.question();
+  }
 
-prompt(`The result is ${output}.`);
+  let output;
+  switch (operation) {
+    case '1':
+      output = Number(number1) + Number(number2);
+      break;
+    case '2':
+      output = Number(number1) - Number(number2);
+      break;
+    case '3':
+      output = Number(number1) * Number(number2);
+      break;
+    case '4':
+      output = Number(number1) / Number(number2);
+      break;
+  }
+  if (Number(number2) === 0 && operation === '4') {
+    prompt(MSG.invalidCalculation);
+  } else {
+    prompt(`The result is ${output}.`);
+  }
+  prompt(MSG.playAgain);
+  answer = readline.question();
+} while (['Y', 'y'].includes(answer));

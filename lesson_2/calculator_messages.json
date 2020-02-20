@@ -1,0 +1,10 @@
+{
+  "welcome": "Welcome to Calculator!",
+  "firstNumber": "What's the first number?",
+  "invalidNumber": "Hmm... that doesn't look like a valid number. Try again: ",
+  "secondNumber": "What's the second number?",
+  "enterOperation":"What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide",
+  "invalidChoose": "Must choose 1, 2, 3 or 4. Try again:",
+  "invalidCalculation": "Invalid calculation, division by 0 is disallowed.",
+  "playAgain": "Would you like to perform another calculation? (y/n)"
+}
