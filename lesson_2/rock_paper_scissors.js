@@ -1,3 +1,4 @@
+const MESSAGES = require("./rock_paper_scissors.json");
 const readline = require("readline-sync");
 const VALID_CHOICES = ['rock', 'paper', 'scissors'];
 
@@ -9,13 +10,13 @@ function displayWinner(choice, computerChoice) {
   if ((choice === 'rock' && computerChoice === 'scissors') ||
   (choice === 'paper' && computerChoice === 'rock') ||
   (choice === 'scissors' && computerChoice === 'paper')) {
-    prompt('You win!');
+    prompt(MESSAGES.playerWin);
   } else if ((computerChoice === 'scissors' && choice === 'paper') ||
     (computerChoice === 'rock' && choice === 'scissors') ||
     (computerChoice === 'paper' && choice === 'rock')) {
-    prompt('Computer win!');
+    prompt(MESSAGES.computerWin);
   } else {
-    prompt("It's a tie!");
+    prompt(MESSAGES.tie);
   }
 }
 
@@ -34,11 +35,11 @@ function expandLetter(choice) {
 
 while (true) {
   prompt(`Choose one: ${VALID_CHOICES.join(', ')}`);
-  prompt('("r" for "rock," "p" for "paper," "s" for "scissors")');
+  prompt(MESSAGES.shortLetterRemainder);
   let shortChoice = readline.question().toLowerCase();
 
   while (!['r', 'p', 's'].includes(shortChoice)) {
-    prompt(`That's not a valid choice. Please enter "r", "p" or "s"`);
+    prompt(MESSAGES.invalidChoice);
     shortChoice = readline.question().toLowerCase();
   }
 
@@ -50,13 +51,13 @@ while (true) {
 
   displayWinner(playerChoice, computerChoice);
 
-  prompt('Do you want to play the game again? (y/n)');
+  prompt(MESSAGES.playAgain);
   let answer = readline.question().toLowerCase();
   while (answer[0] !== 'n' && answer[0] !== 'y') {
-    prompt('Please enter "y" or "n".');
+    prompt(MESSAGES.invalidAnswer);
     answer = readline.question().toLowerCase();
   }
   if (answer[0] === 'n') break;
 }
 
-  prompt('Thank you for playing. Bye!');
+  prompt(MESSAGES.thankYou);

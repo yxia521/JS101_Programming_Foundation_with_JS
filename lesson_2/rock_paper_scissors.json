@@ -1,0 +1,10 @@
+{
+  "playerWin": "You win!",
+  "computerWin": "Computer win!",
+  "tie": "It's a tie!",
+  "shortLetterRemainder": "(\"r\" for \"rock,\" \"p\" for \"paper,\" \"s\" for \"scissors\")",
+  "invalidChoice": "That's not a valid choice. Please enter \"r\", \"p\" or \"s\"",
+  "playAgain": "Do you want to play the game again? (y/n)",
+  "invalidAnswer": "Please enter \"y\" or \"n\".",
+  "thankYou": "Thank you for playing. Bye!"
+}
