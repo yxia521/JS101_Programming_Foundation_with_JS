@@ -319,7 +319,7 @@ console.log(palindromeSubstrings(""));                           // []
 
 **Array Methods**
 
-- `forEach`
+- `forEach`: always returns `undefined`
 
   ```javascript
   [1, 2, 3].forEach(number => {
@@ -327,5 +327,103 @@ console.log(palindromeSubstrings(""));                           // []
   });
   ```
 
-  `forEach` is a method that's called on the array. `forEach` takes an arrow function as an argument - `() => {...}`, which is called a **callback**. (a callback function is a function that provided as argument for another function/method) 
+  - `forEach` is a method that's called on the array. `forEach` takes an arrow function as an argument - `() => {...}`, which is called a **callback**. 
+
+  - A callback function is a function expression that provided as argument for another function/method) 
+  - The whole thing within `forEach` is function expression - a callback.
+
+  ```javascript
+  let produceKeyValues = Object.entries(produce);
+  // produceKeyValues contains:
+  //   [['apple', 'Fruit'],
+  //    ['carrot', 'Vegetable'],
+  //    ['pear', 'Fruit'],
+  //    ['broccoli', 'Vegetable']]
+  
+  produceKeyValues.forEach(keyValue => {
+    let [key, value] = keyValue; // array destructuring argument
+  
+    console.log(`${key} is a ${value}`);
+  });
+  // logs:
+  // apple is a Fruit
+  // carrot is a Vegetable
+  // pear is a Fruit
+  // broccoli is a Vegetable
+  ```
+
+  :speaker: In an *array destructuring assignment*, we can assign elements of the array to multiple variables by wrapping the variable names in brackets `[]`: the first element gets assigned to the first variable `key`, the second element gets assigned to the second variable `value`. It is the same as:
+
+  ```javascript
+  let key = keyValue[0];
+  let value = keyValue[1];
+  ```
+
+- `filter`: selection
+
+  Example 1:
+
+  ```javascript
+  [1, 2, 3].filter(num => num + 1);
+  ```
+
+  Here, the callback's return value is always truthy. (Recall that only that 6 values are falsey)
+
+  `filter` performs selection based on the truthiness of the callback's return value. If the callback's return value is always truthy, then `filter` will select all elements to a new array. so here, it returns `[1, 2, 3]`
+
+  Example 2:
+
+  ```javascript
+  [1, 2, 3].filter(num => {
+  ...   num + 1; // not write return
+  ... })
+  // => []
+  ```
+
+  Since our callback doesn't explicitly return a value, its implicit return value is `undefined`. `undefined` is falsy, `filter` won't select any elements.
+
+- `map`: transformation
+
+  `map` always performs transformation based on the return value of the callback. Here, the return value of callback is boolean.
+
+  ```javascript
+  [1, 2, 3].map(num => num % 2 === 1)
+  // => [ true, false, true ]
+  ```
+
+  ```javascript
+  [1, 2, 3].map(num => {
+    num * 2;
+  });
+  // => [ undefined, undefined, undefined ]
+  ```
+
+  No explict `return`, implicit return value is `undefined`, so return an array of undefined.
+
+:yellow_heart: Summary
+
+| Method    | Action              | Considers the return value of the callback? | Returns a new array from the method? | Length of the returned array |
+| :-------- | :------------------ | :------------------------------------------ | :----------------------------------- | :--------------------------- |
+| `forEach` | Iteration           | No                                          | No, it returns `undefined`           | N/A                          |
+| `filter`  | Selection/Filtering | Yes, its truthiness                         | Yes                                  | Length of original or less   |
+| `map`     | Transformation      | Yes                                         | Yes                                  | Length of original           |
+
+- `includes` doesn't work when you check the existence of an object in an array:
+
+  ```javascript
+  let arr = ['a', 'b', {c: 'foo'}];
+  arr.includes({c: 'foo'}); // => false
+  ```
+
+  Because `includes` uses the `===` to compare its argument with elements of the array. Since `{c: 'foo'} === {c: 'foo'}` returns `false`,  `includes` returns `false`. 
+
+  Below returns `true` since we're checking for the existence of the same object, and not an object with the same key-value pairs:
+
+  ```javascript
+  let obj = {c: 'foo'};
+  let arr = ['a', 'b', obj];
+  arr.includes(obj);  // => true
+  ```
+
+  
 
