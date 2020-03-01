@@ -398,7 +398,7 @@ console.log(palindromeSubstrings(""));                           // []
   // => [ undefined, undefined, undefined ]
   ```
 
-  No explict `return`, implicit return value is `undefined`, so return an array of undefined.
+  :speaker: When a function (any functions) doesn't explictly return something, it implicitly returns `undefined`, so return an array of `undefined`.
 
 :yellow_heart: Summary
 
@@ -425,5 +425,17 @@ console.log(palindromeSubstrings(""));                           // []
   arr.includes(obj);  // => true
   ```
 
-  
+- `every`
+
+  What is the callback's return value? What is the return value of `every`?
+
+  ```javascript
+  [1, 2, 3].every(num => {
+    return num = num * 2; // for assignment, only evaluate and return righ-hand side 
+  });
+  ```
+
+  The return values of the callback will be `2`, `4`, and `6` on the respective iterations. **The expression `num = num * 2` is an assignment expression and will evaluate as the expression on the right-hand side of the assignment and that is what gets returned in each iteration.** 
+
+  Since all of those numbers are truthy values, `every` will return `true`.
 
