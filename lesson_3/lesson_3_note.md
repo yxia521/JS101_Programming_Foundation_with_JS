@@ -3,10 +3,13 @@
   - `string1.concat(string2)`
 
 - How to merge 2 arrays?
+  
   - `arr1.concat(arr2)`
+  
 - How to merge 2 objects? or add one to another?
-  - `Object.assign(obj1, obj2);` // mutate obj1
-
+  
+- `Object.assign(obj1, obj2);` // mutate obj1
+  
 - How to get some part of a string? (at least 2 ways)
 
   - `string.substring(1, 3);` inclusive start, exclusive end
@@ -37,9 +40,9 @@
   (statement2.match(/t/g) || []).length;
   ```
 
-- How to center some text?
+- How to center some text? (or say how to return a string multiple times)
 
-  If we have a 40-character wide table of Flintstone family members, how can we center the following title above the table with spaces?
+  1) If we have a 40-character wide table of Flintstone family members, how can we center the following title above the table with spaces? `string.padStart()`
 
   ```javascript
   let title = "Flintstone Family Members";
@@ -49,6 +52,13 @@
   ```
 
   `' '` is optional, cuz if no 2nd argument passed in, `padStart` pads spaces `' '` by default. If you want to pad some other things rather than spaces, you add a 2nd argument, like `'*'`, `0`...
+
+  2) `string.repeat(integer)`
+
+  ```javascript
+  'i love you '.repeat(3)
+  // 'i love you i love you i love you '
+  ```
 
 - `+` can do String concatenation, but not Array concatenation
 
@@ -71,3 +81,47 @@
   ```
 
   `arr1[0]` `arr2[0]`  are pointing to the same object, the change will be reflected on `arr1` too
+
+- How to determine if a character is uppercase or lowercase? (the condition in `if` statement) 2 ways:
+
+  1)
+
+  ```javascript
+  // it's uppercase
+  if (char === char.toUpperCase()) {
+    // ...
+  }
+  ```
+
+  2) use match and regex:
+
+  ```javascript
+  if (char.match(/[A-Z]/)) // if true, is uppercase
+  ```
+
+- What does following code log? Why?
+
+  `console.log(0.3 + 0.6);`
+
+  `0.9`. :speaker: JS uses floating point numbers for ALL NUMERIC OPERATIONS 
+
+- How to determine is a value is `NaN`
+
+  `isNaN(x)`
+
+- How to convert an array to a  list of arguments, so that some of method who only accepts a list of arguments can use the array? like `Math.min(a list of numbers)`
+
+  Spread operator `...`
+
+  ```javascript
+  let ages = [32, 30, 5843, 10, 22, 237];
+  Math.min(...ages); // convert array to a list of numbers
+  ```
+
+- How `+` operator working on array? Give me an example.
+
+  ```javascript
+  [1, 2] + [3, 4] // '1,23,4'
+  ```
+
+  
