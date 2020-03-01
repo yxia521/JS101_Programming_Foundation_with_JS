@@ -439,3 +439,13 @@ console.log(palindromeSubstrings(""));                           // []
 
   Since all of those numbers are truthy values, `every` will return `true`.
 
+**Quiz**
+
+- Regex `/ /` stands for space. Use for `str.replace(/ /g, "")` remove spaces in a string
+- `+` on array will do coercion
+
+24.
+
+- Verifying your assumptions is a step that you should perform before writing pseudocode
+- 1) Examing the test cases; and 2) asking questions are best ways to verify your assumptions
+- You should write pseudocode before writing code, so you can't test your code until you have at least the start of an algorithm
