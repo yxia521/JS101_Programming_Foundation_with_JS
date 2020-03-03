@@ -1,8 +1,7 @@
 - `Array.prototype.sort`: only works on array destructive
-  - converts all elements to strings and compares them by Unicode character codes
+  - converts all elements to strings and compares them by Unicode character codes, sort strings alphabetically (in an ascending order) by default, if there's no argument passed in
   - `undefined` are always placed at the end
-  - 
-
+  
 - Use `UTF-16` code point to compare string, so that we can use `>` `<` `===` to work with:
 
   ```javascript
