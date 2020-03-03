@@ -71,6 +71,7 @@
     }
   }); // => [ 107, 21, 11, 9, 4, 2, 1 ]
   ```
+
   - If you study the algorithm that `sort` uses, check what `a` `b` is respectively, you'll  see that `sort` does NOT compare every possible pair of values.
 
 **Nested Data Structure**
@@ -250,5 +251,149 @@ In both above cases, we're modifying the object that `a` and `arr[0]` point to; 
   arr; // => [[1], [2], [3, 4]]
   ```
 
+**Functions as first class values & higher order function**
+
+- First class values means: 1) you can invoke functions 2) you can also pass them like any other value.
+
+- Imperative approach: telling the interpreter what to do each step of the way
+
+  ```javascript
+  // for loop transformation
+  let numbers = [1, 2, 3, 4, 5];
+  let transformedNumbers = [];
   
+  for (let index = 0; index < numbers.length; index += 1) {
+    let currentNum = numbers[index];
+    let squaredNum = currentNum * currentNum;
+  
+    transformedNumbers.push(squaredNum);
+  }
+  
+  transformedNumbers; // => [ 1, 4, 9, 16, 25 ]
+  ```
+
+- Declarative approach: treat functions as values.
+
+  ```javascript
+  // map transformation
+  let numbers = [1, 2, 3, 4, 5];
+  let transformedNumbers = numbers.map(currentNum => currentNum * currentNum);
+  
+  transformedNumbers; // => [ 1, 4, 9, 16, 25 ]
+  ```
+
+  `map` takes a function as an argument and calls it for each element of the array used to call `map`. 
+
+- Functions that take other function as arguments are called **Higher Order Functions** (`map` here). The arrow function inside of `map` is called callback.
+
+Example 1:
+
+```javascript
+[[1, 2], [3, 4]].forEach(arr => console.log(arr[0]));
+// 1
+// 3
+// => undefined
+```
+
+:arrow_right: ​`Array.prototype.forEach` is called on the multi-dimensional array `[[1, 2], [3, 4]]`. Each inner array is passed to the callback, in turn, and assigned to the local variable `arr`. 
+
+The element reference operator `[]` is used on the `arr` and it returns the value at index `0` of the current array - in this case the numbers `1` and `3` , respectively. 
+
+The `console.log` function then outputs *a string representation of the number.* (don't forget!!!)
+
+Since this is a single statement callback, the callback's return value is the return value of `console.log(arr[0])` , which is `undefined`. `forEach` doesn't do anything with this returned value though, and, since the return value of `forEach` is always `undefined`, that is what ultimately gets returned. :arrow_left:
+
+| Action                        | Performed on                          | Side Effect                               | Return Value                    | Is Return Value Used?                          |
+| :---------------------------- | :------------------------------------ | :---------------------------------------- | :------------------------------ | :--------------------------------------------- |
+| method call (`forEach`)       | the outer array                       | None                                      | `undefined`                     | No, but shown on line 4                        |
+| callback execution            | Each sub-array                        | None                                      | `undefined`                     | No                                             |
+| element reference (`[0]`)     | Each sub-array                        | None                                      | Element at index 0 of sub-array | Yes, used by `console.log`                     |
+| function call (`console.log`) | Element at index `0` of the sub-array | Outputs string representation of a Number | `undefined`                     | Yes, used to determine callback's return value |
+
+Example 2:
+
+```javascript
+[[1, 2], [3, 4]].map(arr => console.log(arr[0]));
+// 1
+// 3
+// => [undefined, undefined]
+```
+
+| Action                        | Performed on                         | Side Effect                                   | Return Value                         | Is Return Value Used?                         |
+| :---------------------------- | :----------------------------------- | :-------------------------------------------- | :----------------------------------- | :-------------------------------------------- |
+| method call (`map`)           | The outer array                      | None                                          | New array (`[undefined, undefined]`) | No, but shown on line 4                       |
+| callback execution            | Each sub-array                       | None                                          | `undefined`                          | Yes, used by `map` for transformation         |
+| element access (`[0]`)        | Each sub-array                       | None                                          | Element at index 0 of sub-array      | Yes, used by `console.log`                    |
+| function call (`console.log`) | Element at index 0 of each sub-array | Outputs a string representation of an Integer | `undefined`                          | Yes, used as the return value of the callback |
+
+Example 3
+
+Let's mix it up a little and have you try taking apart an example on your own.
+
+```js
+[[1, 2], [3, 4]].map(arr => {
+  console.log(arr[0]);
+  return arr[0];
+});
+```
+
+On line 1, we're calling `Array.prototype.map` on a nested array, and passing each inner array to the callback and assigning it to local variable `arr`. 
+
+On line 2, we're using the element reference operator on `arr` and it returns the value of number at index `0` of each inner array - in this case `1` and `3`, respectively. We're calling `console.log` function and passing `arr[0]` as an argument to it, it outputs the string representation of `1` and `3` to the console.
+
+On line 3, we're explicitly returning the value of the number that `arr[0]` returns, which is `1` and `3`, since this is the last expression of the callback, it's the return value of the callback.
+
+`map` considers the return value of the callback and performs transformation based on it. So `map` returns a new array with two elements in it - `[1, 3]` as the return value of this program.
+
+:speaker: Note the slight change:
+
+```javascript
+[[1, 2], [3, 4]].map(arr => {
+  console.log(arr[0]);
+  arr[0]; // recall that the callback returns undefined if no explicit return
+});
+
+// 1
+// 3
+// => [undefined, undefined]
+```
+
+Example 4:
+
+```javascript
+let myArr = [[18, 7], [3, 12]].forEach(arr => {
+  return arr.map(num => {
+    if (num > 5) {
+      return console.log(num);
+    }
+  });
+});
+
+// 18
+// 7
+// 12
+// => undefined, because of variable declaration instead of return value of forEach
+```
+
+On line 1, we're declaring a variable `myArr` and assigning it to the return value of `forEach` function calling on a nested array. We're passing each subarray to the outer callback and assigning each subarray to the local variable `arr`.
+
+Within the outer callback, we're calling `map` on the local variable `arr`, passing each number of each subarray to the inner callback and assiginng every number to the local variable `num`. 
+
+On line 3, we're comparing each number of each subarray with `5` - in this case, we're comparing `18`, `7`, `3`, `12` with `5` respectively in every iteration.
+
+On line 4, we're calling `console.log` function and passing above number as an argument to it in every iteration. It returns `undefined`, as it's the last expression of inner callback, `map` uses this return value and returns `[undefined, undefined]`, which is used by the outer callback as the return value.
+
+Since `forEach` has nothing to do with the outer callback's return value, it always returns `undefined` so variable `myArr` is assigned to `undefined`.
+
+Variable declaration always returns `undefined`, which ultimately gets returned.
+
+| Action                              | Performed on                               | Side Effect                                 | Return Value                                                 | Is Return Value Used?                                 |
+| :---------------------------------- | :----------------------------------------- | :------------------------------------------ | :----------------------------------------------------------- | :---------------------------------------------------- |
+| variable declaration and assignment | n/a                                        | None                                        | `undefined` (variable declaration always evaluates to `undefined`) | No                                                    |
+| method call (forEach)               | `[[18, 7], [3, 12]]`                       | None                                        | `undefined`                                                  | Yes, used to assign to `myArr`                        |
+| outer callback execution            | Each sub-array                             | None                                        | `[undefind, undefined]`                                      | No                                                    |
+| method call (`map`)                 | Each sub-array                             | None                                        | `[undefined, undefined]`                                     | Yes, returned by the outer callback                   |
+| inner callback execution            | Element of the sub-array in that iteration | None                                        | `undefined`                                                  | Yes, used to transform the array                      |
+| comparison (`>`)                    | Element of the sub-array in that iteration | None                                        | Boolean                                                      | Yes, evaluated by `if`                                |
+| method call (`console.log`)         | Element of the sub-array in that iteration | Outputs a string representation of a Number | `undefined`                                                  | Yes, used to determine return value of inner callback |
 
