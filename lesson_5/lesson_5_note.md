@@ -396,3 +396,9 @@ Variable declaration always returns `undefined`, which ultimately gets returned.
 | comparison (`>`)                    | Element of the sub-array in that iteration | None                                        | Boolean                                                      | Yes, evaluated by `if`                                |
 | method call (`console.log`)         | Element of the sub-array in that iteration | Outputs a string representation of a Number | `undefined`                                                  | Yes, used to determine return value of inner callback |
 
+**Quiz**
+
+- All JS functions are first-class functions, so we can say callback functions are first-class functions
+- There's is no limit to the number of functions that can be passed as arguments to a first-class functions
+- By definition, higher-order functions must accept another function as an argument or return a function
+- (Functions that have nested function definitions are called nested functions)
