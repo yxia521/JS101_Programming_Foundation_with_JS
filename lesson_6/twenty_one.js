@@ -29,12 +29,26 @@ function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function getRandomCard() {
-  let card = [];
-  let randomIndexOfValues = Math.floor(Math.random() * VALUES.length);
-  let randomIndexOfSuits = Math.floor(Math.random() * SUITS.length);
-  card.push(SUITS[randomIndexOfSuits], VALUES[randomIndexOfValues]);
-  return card;
+// shuffle on array
+function shuffle(array) {
+  for (let first = array.length - 1; first > 0; first--) {
+    let second = Math.floor(Math.random() * (first + 1)); // 0 to first
+    [array[first], array[second]] = [array[second], array[first]]; // swap elements
+  }
+
+  return array;
+}
+
+function initializeDeck() {
+  let deck = [];
+
+  for (let suitIndex = 0; suitIndex < SUITS.length; suitIndex++) {
+    for (let valueIndex = 0; valueIndex < VALUES.length; valueIndex++) {
+      deck.push([SUITS[suitIndex], VALUES[valueIndex]]);
+    }
+  }
+
+  return shuffle(deck);
 }
 
 // cards will look like [ [ 'S', '6' ], [ 'D', '10' ] ...]
@@ -60,22 +74,139 @@ function total(cards) {
   return sum;
 }
 
-// ---------- main loop ----------
-let playerCards = [];
-let dealerCards = [];
-
-// first pick 2 cards for player and dealer
-for (let count = 1; count <= 2; count++) {
-  playerCards.push(getRandomCard());
-  dealerCards.push(getRandomCard());
+function busted(cards) {
+  return total(cards) > 21;
 }
-console.log(playerCards);
-console.log(dealerCards);
-console.log(total(playerCards));
-console.log(total(dealerCards));
 
+function detectResult(dealerCards, playerCards) {
+  let playerTotal = total(playerCards);
+  let dealerTotal = total(dealerCards);
+
+  if (playerTotal > 21) {
+    return 'PLAYER_BUSTED';
+  } else if (dealerTotal > 21) {
+    return 'DEALER_BUSTED';
+  } else if (dealerTotal < playerTotal) {
+    return 'PLAYER';
+  } else if (dealerTotal > playerTotal) {
+    return 'DEALER';
+  } else {
+    return 'TIE';
+  }
+}
+
+function displayResults(dealerCards, playerCards) {
+  let result = detectResult(dealerCards, playerCards);
+
+  switch (result) {
+    case 'PLAYER_BUSTED':
+      prompt('You busted! Dealer wins!');
+      break;
+    case 'DEALER_BUSTED':
+      prompt('Dealer busted! You win!');
+      break;
+    case 'PLAYER':
+      prompt('You win!');
+      break;
+    case 'DEALER':
+      prompt('Dealer wins!');
+      break;
+    case 'TIE':
+      prompt("It's a tie!");
+  }
+}
+
+function playAgain() {
+  console.log('---------------');
+  prompt('Would you like to play again? (y or n)');
+  let answer = readline.question().toLowerCase();
+  return answer[0] === 'y';
+}
+
+// pick up 2 cards for player and dealer, a nested array with 2 subarrays
+function popTwoFromDeck(deck) {
+  return [deck.pop(), deck.pop()];
+}
+
+// make the format look better
+function hand(cards) {
+  return cards.map(card => `${card[1]}${card[0]}`).join(' ');
+}
+
+// ---------- main loop ----------
 while (true) {
-  prompt('hit or stay? (h or s)');
-  let answer = require.question().toLowerCase();
-  if (['stay', 's'].includes(answer)) break;
+  prompt('Welcome to Twenty-One!');
+
+  let playerCards = [];
+  let dealerCards = [];
+  let deck = initializeDeck();
+
+  // first pick 2 cards for player and dealer, push a nested arr with 2 subarr, use spread syntax
+  playerCards.push(...popTwoFromDeck(deck));
+  dealerCards.push(...popTwoFromDeck(deck));
+
+  prompt(`Dealer has [${dealerCards[0]}] and ?`);
+  prompt(`You have [${playerCards[0]}] and [${playerCards[1]}], for a total of: ${total(playerCards)}.`);
+
+  // player turn
+  while (true) {
+    let playerTurn;
+    while (true) {
+      prompt('Would you like to (h)it or (s)tay?');
+      playerTurn = readline.question().toLowerCase();
+      if (['h', 's'].includes(playerTurn)) break;
+      prompt("Sorry, that's not valid input. Please enter 'h' or 's'.");
+    }
+
+    if (playerTurn === 'h') {
+      playerCards.push(deck.pop());
+      prompt('You chose to hit!');
+      prompt(`Your cards are now: ${hand(playerCards)}`);
+      prompt(`Your total is now: ${total(playerCards)}`);
+    }
+
+    if (playerTurn === 's' || busted(playerCards)) break;
+  } 
+
+  if (busted(playerCards)) {
+    displayResults(dealerCards, playerCards);
+    if (playAgain()) {
+      continue;
+    } else {
+      break;
+    } 
+  } else {
+    prompt(`You stayed at ${total(playerCards)}.`);
+  }
+
+  // dealer turn
+  prompt('Dealer turn...');
+
+  while (total(dealerCards) < 17) {
+    prompt('Dealer hits!');
+    dealerCards.push(deck.pop());
+    prompt(`Dealer's cards are now: ${hand(dealerCards)}.`);
+  }
+
+  if (busted(dealerCards)) {
+    prompt(`Dealer's total is now: ${total(dealerCards)}.`);
+    displayResults(dealerCards, playerCards);
+    if (playAgain()) {
+      continue;
+    } else {
+      break;
+    }
+  } else {
+    prompt(`Dealer stays at ${total(dealerCards)}.`);
+  }
+  
+  // both choose to stay - compare the results
+  console.log('-------------------------------------');
+  prompt(`Dealer has ${dealerCards}, for a total of ${total(dealerCards)}`);
+  prompt(`Player has ${playerCards}, for a total of ${total(playerCards)}`);
+  console.log('-------------------------------------');
+
+  displayResults(dealerCards, playerCards);
+
+  if (!playAgain()) break;
 }
