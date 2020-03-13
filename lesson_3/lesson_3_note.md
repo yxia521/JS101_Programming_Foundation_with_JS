@@ -124,4 +124,17 @@
   [1, 2] + [3, 4] // '1,23,4'
   ```
 
+- How to keep two digits after decimal point of a floating number? (What data type this method return?)
+
+  ```javascript
+  (54.3421).toFixed(2); // => '54.34'
+  ```
+
+- How to create a range from 1 to 99? 
+
+  ```javascript
+  [...Array(99).keys()].map(x => ++x);
+  // first create 0...98, then increment every number by 1
+  ```
+
   
