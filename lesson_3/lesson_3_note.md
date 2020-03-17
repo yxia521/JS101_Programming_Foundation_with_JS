@@ -1,14 +1,24 @@
-- How to prepend  a string to another string? (2 ways)
+- How to append a string to another string? (2 ways)
   - `+`
+  
+  NOTE that `+` can do String concatenation, but not Array concatenation:
+  
+    ```javascript
+    'hi' + ' world';  // will be 'hi world'
+    [1, 2, 3] + [4];  // will not be [1, 2, 3, 4], '1, 2, 34' instead
+    ```
+  
   - `string1.concat(string2)`
-
+  
 - How to merge 2 arrays?
   
   - `arr1.concat(arr2)`
   
 - How to merge 2 objects? or add one to another?
   
-- `Object.assign(obj1, obj2);` // mutate obj1
+  ```javascript
+  Object.assign(obj1, obj2); // mutate obj1
+  ```
   
 - How to get some part of a string? (at least 2 ways)
 
@@ -20,9 +30,9 @@
 
     `string.slice(2)` starting from index 2 to the end
 
-    `string.slice()`: starting from index 0
+    `string.slice()`: starting from index 0, shallow copy the string
 
-- How to remove, replace, or insert elements to an array (mutable)? (use only 1 method)
+- How to remove, replace, or insert elements to an array? (use a mutating method)
 
   - `array.splice(index, element amount, element needs to be inserted/ will replace)`
 
@@ -60,21 +70,14 @@
   // 'i love you i love you i love you '
   ```
 
-- `+` can do String concatenation, but not Array concatenation
-
-  ```javascript
-  'hi' + ' world';  // will be 'hi world'
-  [1, 2, 3] + [4];  // will not be [1, 2, 3, 4]
-  ```
-
-- How to create a *shadow copy* of an array? (Note shadow copy, instead of deep copy)
+- How to create a *shallow copy* of an array? (Note shallow copy, instead of deep copy)
 
   ```javascript
   let arr1 = [{ first: "value1" }, { second: "value2" }, 3, 4, 5];
-  let arr2 = arr1.slice(); // arr2 is a shadow copy of arr1
+  let arr2 = arr1.slice(); // arr2 is a shallow copy of arr1
   ```
 
-  which means, when we reassign value to one of these object elements, `arr1` will be changed too:
+  which means, when we reassign value to one of these object elements (cuz they're mutable), `arr1` will be changed too:
 
   ```javascript
   arr2[0].first = 42;
@@ -105,9 +108,12 @@
 
   `0.9`. :speaker: JS uses floating point numbers for ALL NUMERIC OPERATIONS 
 
-- How to determine is a value is `NaN`
+- How to determine is a value is `NaN`:
 
-  `isNaN(x)`
+  ```javascript
+  isNaN(9);   // false
+  isNaN(NaN); // true
+  ```
 
 - How to convert an array to a  list of arguments, so that some of method who only accepts a list of arguments can use the array? like `Math.min(a list of numbers)`
 
@@ -137,4 +143,11 @@
   // first create 0...98, then increment every number by 1
   ```
 
+  `[...Array(99)]`: an array of 99 `undefined` 
   
+  `[...Array(99).keys()]`: an array of number 0 - 98
+  
+  `++x`: precedence increment happens after the value returns, so it contains the incremented value, returns an array of number 1 - 99
+  
+  `x++`: happens before the value returns, so it doesn't contain the incremented value, still returns an array of number 0 - 98
+
