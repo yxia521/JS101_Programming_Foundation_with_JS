@@ -80,7 +80,7 @@
   obj['c']; // => undefined
   ```
 
-  How can we differentiate beweet this vs. a property that has `undefined` as its value? Use `Array.prototype.hasOwnProperty` or `Object.keys`
+  How can we differentiate beweetn this VS. a property that has `undefined` as its value? Use `Array.prototype.hasOwnProperty` or `Object.keys`
 
   ```javascript
   let obj = { a: 'foo', b: 'bar', c: undefined};
@@ -125,7 +125,7 @@
 
   ```javascript
   'abcdef'.charCodeAt(1) // 98; index 1 is 'b', b's character code is 98
-  'abcdef'.charCodeAt()  // 97, the char code for 'a'
+  'abcdef'.charCodeAt()  // 97, the char code for 'a', first char if no arguments passed
   ```
 
   :speaker: Note: prototype method
@@ -367,7 +367,7 @@ console.log(palindromeSubstrings(""));                           // []
   [1, 2, 3].filter(num => num + 1);
   ```
 
-  Here, the callback's return value is always truthy. (Recall that only that 6 values are falsey)
+  Here, the callback's return value is always truthy. (Recall that only that 6 values are falsy)
 
   `filter` performs selection based on the truthiness of the callback's return value. If the callback's return value is always truthy, then `filter` will select all elements to a new array. so here, it returns `[1, 2, 3]`
 
@@ -435,7 +435,7 @@ console.log(palindromeSubstrings(""));                           // []
   });
   ```
 
-  The return values of the callback will be `2`, `4`, and `6` on the respective iterations. **The expression `num = num * 2` is an assignment expression and will evaluate as the expression on the right-hand side of the assignment and that is what gets returned in each iteration.** 
+  The return values of the callback will be `2`, `4`, and `6` on the respective iterations. **The expression `num = num * 2` is an assignment expression and will evaluate as the expression on the right-hand side of the assignment and that is what gets returned in each iteration.** The same as `return num * 2;`
 
   Since all of those numbers are truthy values, `every` will return `true`.
 
