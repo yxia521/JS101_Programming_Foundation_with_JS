@@ -1,5 +1,6 @@
 // Grocery List
-// Write a function that takes a grocery list (a two-dimensional array) with each element containing a fruit and a quantity, and returns a one-dimensional array of fruits, in which each fruit appears a number of times equal to its quantity.
+// Write a function that takes a grocery list (a two-dimensional array) with each element containing a fruit and a quantity, and returns 
+// a one-dimensional array of fruits, in which each fruit appears a number of times equal to its quantity.
 
 // Example:
 
@@ -22,8 +23,8 @@ function buyFruit(fruits) {
       result.push(fruit[count]);
     }
   });
-  
-  return result;
+   
+  return result; // [ 'apple', 'orange', 'banana', 'apple', 'apple', 'orange' ]
 }
 
 // ls sol
