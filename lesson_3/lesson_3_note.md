@@ -1,7 +1,7 @@
 - How to append a string to another string? (2 ways)
   - `+`
   
-  NOTE that `+` can do String concatenation, but not Array concatenation:
+  NOTE that `+` can do String concatenation, but not Array concatenation, for array concatenation, use `array.concat`
   
     ```javascript
     'hi' + ' world';  // will be 'hi world'
@@ -32,6 +32,15 @@
 
     `string.slice()`: starting from index 0, shallow copy the string
 
+    `string.slice(-2)`: starting from index at length - 2, to the end: 
+
+    ```javascript
+    let str = 'hiworld'
+    str.slice(-2); // 'ld'
+    ```
+
+  - `slice` works on Array, returns array; works on string, returns string
+
 - How to remove, replace, or insert elements to an array? (use a mutating method)
 
   - `array.splice(index, element amount, element needs to be inserted/ will replace)`
@@ -47,7 +56,7 @@
 
   ```javascript
   let statement2 = "Easy come, easy go.";
-  (statement2.match(/t/g) || []).length;
+  (statement2.match(/t/g) || []).length; // 0
   ```
 
 - How to center some text? (or say how to return a string multiple times)
@@ -150,4 +159,121 @@
   `++x`: precedence increment happens after the value returns, so it contains the incremented value, returns an array of number 1 - 99
   
   `x++`: happens before the value returns, so it doesn't contain the incremented value, still returns an array of number 0 - 98
+
+- Array values with negative indexes is considered as empty array, i.e. when you check `length`, it's `0`
+
+  ```javascript
+  let arr = [];
+  arr[-1] = 5;
+  arr.length; // => 0, meaning it's empty
+  arr;        // => [ '-1': 5 ], which is not actually an element
+  ```
+
+- `false` is not falsy, it is exactly false.
+
+- How to remove anything except numbers from **a string**?
+
+  ```javascript
+  "+100".replace(/[^0-9]/g, ''); // returns "100"
+  ```
+
+  - `replace` returns a new string, non-mutating
+
+- How to get a number digit by digit? How to get a one's (rightmost) digit of a number? ten's digit? .... (show me the math, this is not difficult, but try to memorize the logic for time saving during the interview)
+  
+  - `4321 / 10` = ?
+- `4321 % 10` = ?  to get the rightmost digit of a number
+  
+- `reverse()` only works for Array
+
+- When transfer a number to string, use `String(17)` in preference to `(17).toString()`
+
+- What does `push` return? 
+  
+- The length of new array
+  
+- How to check if a number is 0, positive or negative? use a `Math` method.
+
+  ```javascript
+  Math.sign(0)     // 0
+  Math.sign(-2432) // -1
+  Math.sign(677)   // 1, note there's no +
+  Math.sign('-3')  // -1
+  ```
+
+- How to create multiple times of a specific string, character? like `'hi'` => `'hihihi'`
+
+  `string.repeat(times)`: `'hi'.repeat(3)` returns a new string, non-mutating
+
+- How to compare the right-side and the left-side of a number is equal? (before we compare, what should we do)
+  
+- `String(number)` to compare them as strings
+  
+- How to clean up multiple consecutive spaces to just one space in a string? (Natural reaction: when need to remove something, consider `replace` )
+
+  ```javascript
+  let s = "   what s my     line ";
+  s.replace(/\s+/g, ' ')
+  ```
+
+  - Note `/\s/` VS `/\s+/`
+    -  `/\s/` : one space, replace each character into one
+    - `/\s+/`: one or more space, replace each consecutive character into one
+
+  ```javascript
+  s.replace(/\s+/g, '#') // "#what#s#my#line#"
+  s.replace(/\s/g, '#')  // "###what#s#my#####line#"
+  ```
+
+- Use Regex to show the following: 
+  - Character that is non-alphabetic, both uppercase and lowercase: `/[^a-z]/gi`, `i` case-insensitive
+  - Character that is not number: `/[^0-9]/g`
+
+- What's the form of `switch` statement, when there's explicit `return`, how can we write it more concise?
+
+  ```javascript
+  switch (String(century).slice(-1)) {
+      case '1':
+       return `${century}st`;
+      case '2':
+      return `${century}nd`;
+      case '3':
+      return `${century}rd`;
+      default:
+      return `${century}th`;
+    }
+  ```
+
+  more concise:
+
+  ```javascript
+  switch (String(century).slice(-1)) {
+      case '1': return `${century}st`; // one-line expression
+      case '2': return `${century}nd`;
+      case '3': return `${century}rd`;
+      default: return `${century}th`;
+    }
+  ```
+
+  - If no explicit `return`, don't forget `break;` keyword
+  - remember to add `()` after `switch`
+  - remember how to write `default`
+
+- A very quick expression to show the last, or last two characters of a string?
+
+  `'string'.slice(-1)` `'string'.slice(-2)`
+
+- How to generate a random integer between any two numbers?
+
+  ```javascript
+  Math.floor(Math.random() * ((max - min) + 1)) + min;
+  ```
+
+  - Note: `Math.random` generates floating point number, but `Math.floor` turns it into an integer.
+
+- What does `Math.ceil()` `Math.floor()` return if the argument is an integer?
+
+  - the integer itself.
+
+- Remember that `reverse` is for **Array**!!! `Array.reverse()` : **mutating method**
 
