@@ -13,6 +13,7 @@ console.log(buyFruit([['apple', 3], ['orange', 1], ['banana', 2]]));
 //   - get a list of all values, variable times
 //   - use times to push each value n times to a new array
 
+// my sol is kinda incorrect
 function buyFruit(fruits) {
   let times = fruits.map(pair => pair[1]); // [ 3, 1, 2 ]
   let fruit = fruits.map(pair => pair[0]); // ["apple", "orange", "banana"]
@@ -28,6 +29,25 @@ function buyFruit(fruits) {
 }
 
 // ls sol
+// 1
+function buyFruit(fruitsList) {
+  return fruitsList
+    .map(fruit => repeat(fruit))
+    .reduce((groceryList, fruit) => groceryList.concat(fruit));
+}
+
+function repeat(fruitAndQuantity) {
+  let result = [];
+  let fruit = fruitAndQuantity[0];
+  let quantity = fruitAndQuantity[1];
+
+  for (let num = 0; num < quantity; num += 1) {
+    result.push(fruit);
+  }
+
+  return result;
+}
+// 2
 function buyFruit(list) {
   const mergedResult = list.map(subarray =>
     Array(subarray[1]).fill(subarray[0])
