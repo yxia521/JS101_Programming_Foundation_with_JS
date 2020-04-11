@@ -52,7 +52,9 @@
   arr.splice(2, 1, 'hi') // replace 1 el at index 2 with 'hi', return [3], arr=[1, 2, 'hi']
   ```
 
-- How to count the occurences of a specific character in a string? (use one line code)
+  - For replacing a string with another string: `string.replace(regex, anotherString)` (non-mutating)
+
+- How to count the occurences of a specific character in a string? (use one line code, regex)
 
   ```javascript
   let statement2 = "Easy come, easy go.";
@@ -105,7 +107,7 @@
   }
   ```
 
-  2) use match and regex:
+  2) use `match` and regex:
 
   ```javascript
   if (char.match(/[A-Z]/)) // if true, is uppercase
@@ -113,9 +115,9 @@
 
 - What does following code log? Why?
 
-  `console.log(0.3 + 0.6);`
+  `console.log(7/2);`
 
-  `0.9`. :speaker: JS uses floating point numbers for ALL NUMERIC OPERATIONS 
+  `3.5`. :speaker: JS uses floating point numbers for ALL NUMERIC OPERATIONS 
 
 - How to determine is a value is `NaN`:
 
@@ -182,6 +184,7 @@
 - How to get a number digit by digit? How to get a one's (rightmost) digit of a number? ten's digit? .... (show me the math, this is not difficult, but try to memorize the logic for time saving during the interview)
   
   - `4321 / 10` = ?
+  
 - `4321 % 10` = ?  to get the rightmost digit of a number
   
 - When transfer a number to string, use `String(17)` in preference to `(17).toString()`
@@ -205,7 +208,7 @@
 
 - How to compare the right-side and the left-side of a number is equal? (before we compare, what should we do)
   
-- `String(number)` to compare them as strings
+  - `String(number)` to compare them as strings.
   
 - How to clean up multiple consecutive spaces to just one space in a string? (Natural reaction: when need to remove something, consider `replace` )
 
@@ -232,13 +235,13 @@
   ```javascript
   switch (String(century).slice(-1)) {
       case '1':
-       return `${century}st`;
+      	return `${century}st`;
       case '2':
-      return `${century}nd`;
+      	return `${century}nd`;
       case '3':
-      return `${century}rd`;
+      	return `${century}rd`;
       default:
-      return `${century}th`;
+      	return `${century}th`;
     }
   ```
 
@@ -377,5 +380,6 @@ Regex
   `string.padStart` is non-mutating.
 
 - Destructively remove the first element of an array? destructively add an element to the front of an array?
+  
   - `array.shift()`; `array.unshift('hi')`
 
