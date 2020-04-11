@@ -5,7 +5,7 @@
   
     ```javascript
     'hi' + ' world';  // will be 'hi world'
-    [1, 2, 3] + [4];  // will not be [1, 2, 3, 4], '1, 2, 34' instead
+    [1, 2, 3] + [4];  // will not be [1, 2, 3, 4], '1, 2, 34' instead, always return string
     ```
   
   - `string1.concat(string2)`
@@ -41,15 +41,15 @@
 
   - `slice` works on Array, returns array; works on string, returns string
 
-- How to remove, replace, or insert elements to an array? (use a mutating method)
+- How to remove, replace, or insert elements to an array? (use a **mutating** method)
 
   - `array.splice(index, element amount, element needs to be inserted/ will replace)`
 
   ```javascript
   let arr = [1, 2, 3]
-  arr.splice(2, 1)       // remove el at index 2, remove one el
-  arr.splice(2, 0, 'hi') // add el at index 2, add one 'hi'
-  arr.splice(2, 1, 'hi') // replace one el at index 2 with 'hi'
+  arr.splice(2, 1)       // remove 1 el at index 2, returns array [3], now arr = [1, 2]
+  arr.splice(2, 0, 'hi') // insert a 'hi' at index 2, returns [], arr = [ 1, 2, 'hi', 3 ]
+  arr.splice(2, 1, 'hi') // replace 1 el at index 2 with 'hi', return [3], arr=[1, 2, 'hi']
   ```
 
 - How to count the occurences of a specific character in a string? (use one line code)
@@ -171,7 +171,7 @@
 
 - `false` is not falsy, it is exactly false.
 
-- How to remove anything except numbers from **a string**?
+- How to remove anything except numbers from **a string**? Remove vowels from a string? etc...
 
   ```javascript
   "+100".replace(/[^0-9]/g, ''); // returns "100"
@@ -184,13 +184,11 @@
   - `4321 / 10` = ?
 - `4321 % 10` = ?  to get the rightmost digit of a number
   
-- `reverse()` only works for Array
-
 - When transfer a number to string, use `String(17)` in preference to `(17).toString()`
 
 - What does `push` return? 
   
-- The length of new array
+  - The length of new array
   
 - How to check if a number is 0, positive or negative? use a `Math` method.
 
@@ -276,4 +274,108 @@
   - the integer itself.
 
 - Remember that `reverse` is for **Array**!!! `Array.reverse()` : **mutating method**
+
+- Format difference between `match` and `test`? What do they return respectively?
+
+  `string.match(/[a-z]/)`: returns an array containing element satisfying regex, if nothing match, return `null`, which is falsy
+
+  `/[a-z]/.test(string)`: return boolean `true` or `false`
+
+---
+
+Regex
+
+- `/[a-z]/g` : Checks if the character is a lowercase letter between `'a'` and `'z'`.
+
+- `/[A-Z]/g` : Checks if the character is an uppercase letter between `'A'` and `'Z'`.
+
+- `/[^a-z]/gi` : Checks if the character is neither an uppercase letter nor a lowercase letter.
+
+- `g` : Tells the regex engine to search the entire string.
+
+- `i` : Tells the regex engine to ignore case.
+
+- `let regex = new RegExp(word, 'gi')`, when the thing you want to match is a string, not a regex, you can write this way, because `string.match()` must have regex inside of ()
+
+  ```javascript
+  function searchWord(word, text) {
+    let regex = new RegExp(word, 'gi'); // word here is a string
+    return text.match(regex) ? text.match(regex).length : 0;
+  }
+  ```
+
+  string_and_text_processing Q9
+
+---
+
+- Instead of using `array.flat`, LS usually use `result = result.concat([1, 2])` to make sure there's no nested array in the result array. `result` here is empty array `[]`
+
+  ```javascript
+  ...
+  let result = [];
+    result = result.concat(array.slice(1), array[0]);
+    return result;
+  ...
+  ```
+
+- Give at least 2 ways to create a range from 1 to a given number? for example,  given 3, create 1, 2, 3
+
+  1) `[...Array(3).keys()].map(x => ++x)`
+
+  2) use `for` loop
+
+  ```javascript
+  function sumSquareDifference(count) {
+    let sum = 0;
+    let sumOfSquares = 0;
+    for (let number = 1; number <= count; number++) {
+      sum += number;
+      sumOfSquares += Math.pow(number, 2);
+    }
+    return Math.pow(sum, 2) - sumOfSquares;
+  }
+  ```
+
+- Given an array `arr = [1, 2, 3]`, how to convert it to a range of numbers?
+
+  `Math.max(...arr)` since `max` `min` take range: `Math.max(1, 2, 3)`
+
+- How to determine if a number **has unique digits**? (at least 2 ways)
+
+  1) first, regex to determine if a number has repeated digits, if yes, return true, if no, return false.
+
+  ```javascript
+  !!(/([0-9]).*?\1/.test(123))  // returns false, so !! has to do opposite way
+  ```
+
+  2) convert to array first, then use a tricky way
+
+  ```javascript
+  let i = 1233;
+  let digits = String(i).split('');         // an array ["1", "2", "3", "3"]
+  let uniqueDigits = [...new Set(digits)];  // an array ["1", "2", "3"]
+  digits.length === uniqueDigits.length;    // returns false
+  ```
+
+- How to swap two elements in an array destructively?
+
+  ```javascript
+  let arr =[1, 2]
+  [arr[0], arr[1]] = [arr[1], arr[0]] // returns [2, 1]
+  arr; // => [2, 1]
+  ```
+
+- How to center a string in the center of a text? `string.padStart(arg1, arg2)`, when you use this, notice that **the first argument is - the total length of your string + the length of stuff you want to pad**:
+
+  ```javascript
+  "hi".padStart(5, '0') // => "000hi"
+  "hi".padStart(1, '0') // => "hi"
+  ```
+
+  if the first argument is less than your string's length, nothing fancy returns, instead returns the original string. 
+
+  `string.padStart` is non-mutating.
+
+- Destructively remove the first element of an array? destructively add an element to the front of an array?
+  - `array.shift()`; `array.unshift('hi')`
 
