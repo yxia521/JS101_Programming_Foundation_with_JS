@@ -54,3 +54,30 @@ function buyFruit(list) {
   );
   return [].concat(...mergedResult);
 }
+
+// ----- my 2nd try when I feel ready for interview -----
+// input:
+//   - a nested array
+//   - for each subarray
+//     - a string, a number
+// output:
+//   - an array
+
+// algo:
+//   - initialize a result = []
+//   - iterate thru the array
+//     - for each subarray
+//       - push the first element to the result, n times (second element)
+//          - create a loop for n
+//     - end
+//   - return result
+
+function buyFruit(arr) {
+  let result = [];
+  for (let outerIdx = 0; outerIdx < arr.length; outerIdx++) {
+    for (let n = 1; n <= arr[outerIdx][1]; n++) {
+      result.push(arr[outerIdx][0]);
+    }
+  }
+  return result;
+}
