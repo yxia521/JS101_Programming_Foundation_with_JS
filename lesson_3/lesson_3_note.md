@@ -54,12 +54,20 @@
 
   - For replacing a string with another string: `string.replace(regex, anotherString)` (non-mutating)
 
-- How to count the occurences of a specific character in a string? (use one line code, regex)
+- How to count the occurrences of a specific character in a string? (use one line code, regex)
 
   ```javascript
   let statement2 = "Easy come, easy go.";
   (statement2.match(/t/g) || []).length; // 0
   ```
+
+- Or when you only care about if a char occurs once or more than once in a string (no need to count occurrence), how can you do?
+
+  ```javascript
+  string.indexOf(char) === string.lastIndexOf(char);
+  ```
+
+  
 
 - How to center some text? (or say how to return a string multiple times)
 
@@ -339,7 +347,7 @@ Regex
   }
   ```
 
-- Given an array `arr = [1, 2, 3]`, how to convert it to a range of numbers?
+- Given an array `arr = [1, 2, 3]`, how to convert it to a range of numbers? In order to be used by `max`
 
   `Math.max(...arr)` since `max` `min` take range: `Math.max(1, 2, 3)`
 
@@ -351,11 +359,11 @@ Regex
   !!(/([0-9]).*?\1/.test(123))  // returns false, so !! has to do opposite way
   ```
 
-  2) convert to array first, then use a tricky way
+  2) convert to string first, then use a tricky way
 
   ```javascript
   let i = 1233;
-  let digits = String(i).split('');         // an array ["1", "2", "3", "3"]
+  let digits = String(i);         // a string "1233"
   let uniqueDigits = [...new Set(digits)];  // an array ["1", "2", "3"]
   digits.length === uniqueDigits.length;    // returns false
   ```
@@ -382,4 +390,63 @@ Regex
 - Destructively remove the first element of an array? destructively add an element to the front of an array?
   
   - `array.shift()`; `array.unshift('hi')`
+
+- When a question is like: compare two things, determine whether they're equal? 
+
+  - You should compare primitive values, like two strings, don't compare two arrays.
+  -  We can't compare the array, because they are forever two different arrays, occupy difference space
+    in memory. They just happen to have the same array value.
+    What we should compare is string, cuz if two primitive values are the same, they must occupy the 
+    same space in memory, indeed they must be one string, a string is of course equal to itself. e.g.:
+
+  ```javascript
+  let a = "hi";
+  let b = "hi";
+  a === b // true
+  
+  let c = [1,2];
+  let d = [1,2];
+  c === d // false
+  ```
+
+- How to remove all repeated letters in a string, returns a all-letters-distinct string?
+  - use `[...new Set(string)]` , returns an array with no repeated element
+  - `[...new Set(array)]` can also work on Array.
+
+- Spread syntax: allows elements to be expanded out from an array
+- Rest syntax: places a range of elements into an array
+
+- How to test whether *all* elements in the array satisfy some conditions?
+
+  ```javascript
+  [1, 2, 3].every(i => i > 4) // false
+  ```
+
+- What does `Array.prototype.find()` return?
+  - returns the *first* element that satisfies the callback
+  - if no such el, return `undefined`
+
+- `for...of + iterable`: things after `of` must be iterable, for example: an array
+
+  ```javascript
+  let arr = [1, 2, 3];
+  for (let num of arr) {
+  	console.log(num);
+  }
+  // 1
+  // 2
+  // 3
+  undefined
+  ```
+
+  `for...in...`: things after `in` are non-iterable, for example, an object
+
+  ```javascript
+  let result = { car: 4, truck: 3, SUV: 1, motorcycle: 2 };
+  for (let key in result) {
+  	console.log(`${key} => ${result[key]}`);
+  }
+  ```
+
+  
 
